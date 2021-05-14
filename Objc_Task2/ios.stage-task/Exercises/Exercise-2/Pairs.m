@@ -4,23 +4,17 @@
 
 - (NSInteger)countPairs:(NSArray <NSNumber *> *)array number:(NSNumber *)number {
 
+    if (array.count < 2) {
+        return 0;
+    }
+
     int counter = 0;
-    NSEnumerator *enumerator = [array reverseObjectEnumerator];
 
-    for (NSNumber *myNumber in enumerator) {
-
-        int j = [array indexOfObject:myNumber];
-        while (j >= 0) {
-
-            if ((myNumber.intValue - array[j].intValue) == number.intValue) {
-                counter += 1;
+    for (NSUInteger i = 0; i < array.count; i++) {
+        for (NSUInteger j = i+1; j< array.count; j++) {
+            if ([array objectAtIndex:j].intValue - [array objectAtIndex:i].intValue == number.intValue) {
+                counter++;
             }
-
-            if (j == 0) {
-                break;
-            }
-            
-            j--;
         }
     }
     return counter;

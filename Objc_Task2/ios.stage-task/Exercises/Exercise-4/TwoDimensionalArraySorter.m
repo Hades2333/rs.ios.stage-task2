@@ -26,6 +26,11 @@
         }
     }
 
+    bool allNumbers = (!(!arrayOfNumbers || !arrayOfNumbers.count) ? true : false);
+    bool allStrings = (!(!arrayOfStrings || !arrayOfStrings.count) ? true : false);;
+    bool stringsAndNumbers = (allNumbers && allStrings);
+
+
     for (int i = 1; i < arrayOfNumbers.count; i++) {
 
         for (int j = i; j > 0; j--) {
@@ -46,21 +51,19 @@
         for (int j = i; j < arrayOfStrings.count; j++) {
             NSComparisonResult result = [arrayOfStrings[j] compare:minString];
 
-            if (result == NSOrderedAscending) {
+            if (result == (stringsAndNumbers ? NSOrderedDescending : NSOrderedAscending)) {
                 minString = arrayOfStrings[j];
                 [arrayOfStrings exchangeObjectAtIndex:j withObjectAtIndex:i];
             }
         }
     }
 
-    bool allNumbers = (!(!arrayOfNumbers || !arrayOfNumbers.count) ? true : false);
-    bool allStrings = (!(!arrayOfStrings || !arrayOfStrings.count) ? true : false);;
-    bool stringsAndNumbers = (allNumbers && allStrings);
-
     if (stringsAndNumbers) {
         NSArray *answer = [[NSArray alloc] initWithObjects:arrayOfNumbers, arrayOfStrings, nil];
+        NSLog(@"this is answer %@", answer);
         return answer;
     } else if (allNumbers) {
+
         return [arrayOfNumbers copy];
     } else {
         return [arrayOfStrings copy];
